@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/EasyAsk_Search",
+    "type": "magento-module",
+    "license": "proprietary",
+    "homepage": "",
+    "description": "EasyAsk is the leading e-commerce search, navigation & merchandising solution for e-retail, mobile commerce and B2B commerce, driving higher conversion rates and increased online revenue.",
+    "authors": [
+    {
+        "name": "Srinivas Kotamreddy",
+        "email": "skotamreddy@easyask.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

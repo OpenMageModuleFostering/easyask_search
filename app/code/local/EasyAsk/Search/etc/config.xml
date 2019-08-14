@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <EasyAsk_Search>
+             <version>0.1.0</version>
+        </EasyAsk_Search>
+    </modules>
+    
+    <frontend>
+
+    	<routers>
+    		<catalogsearch>
+    			<args>
+    				<modules>
+    					<EasyAsk_Search before="Mage_CatalogSearch">EasyAsk_Search</EasyAsk_Search>
+    				</modules>
+    			</args>
+    		</catalogsearch>
+    	</routers>
+
+    	<routers>
+    		<easyask_search>
+    			<use>standard</use>
+    			<args>
+    				<module>EasyAsk_Search</module>
+    				<frontName>eae</frontName>
+    			</args>
+    		</easyask_search>
+    	</routers>
+
+        <layout>
+            <updates>
+                <easyask_search>
+                    <file>easyask/easyask.xml</file>
+                </easyask_search>
+            </updates>
+        </layout>
+
+    </frontend>
+    
+    <global>
+
+        <models>
+
+             <easyask_search>
+                <class>EasyAsk_Search_Model</class>
+             </easyask_search>
+
+             <catalogsearch_resource>
+             	<rewrite>
+             		<fulltext_collection>EasyAsk_Search_Model_Resource_CatalogSearch_Fulltext_Collection</fulltext_collection>
+             	</rewrite>
+             </catalogsearch_resource>
+  			<catalog_resource>
+                <rewrite>
+                    <product_collection>EasyAsk_Search_Model_Resource_Catalog_Product_Collection</product_collection>
+                </rewrite>
+            </catalog_resource> 
+ 
+             <catalog>
+             	<rewrite>
+                    <layer>EasyAsk_Search_Model_Catalog_Layer</layer>
+                    <layer_filter_attribute>EasyAsk_Search_Model_Catalog_Layer_Filter_Attribute</layer_filter_attribute>
+             		<layer_filter_item>EasyAsk_Search_Model_Catalog_Layer_Filter_Item</layer_filter_item>
+             		<layer_filter_category>EasyAsk_Search_Model_Catalog_Layer_Filter_Category</layer_filter_category>
+             	</rewrite>
+             </catalog>
+
+             <catalogsearch>
+             	<rewrite>
+             		<layer_filter_attribute>EasyAsk_Search_Model_CatalogSearch_Layer_Filter_Attribute</layer_filter_attribute>
+             		<layer>EasyAsk_Search_Model_CatalogSearch_Layer</layer>
+             	</rewrite>
+             </catalogsearch>
+
+        </models>
+
+        <helpers>
+
+            <easyask_search>
+                <class>EasyAsk_Search_Helper</class>
+            </easyask_search>
+
+             <!--<catalog>
+             	<rewrite>
+             		<category>EasyAsk_Search_Helper_Category</category>
+             	</rewrite>
+             </catalog>-->
+
+        </helpers>
+
+        <blocks>
+
+             <easyask_search>
+                <class>EasyAsk_Search_Block</class>
+             </easyask_search>
+
+             <catalog>
+             	<rewrite>
+             		<product_list>EasyAsk_Search_Block_Catalog_Product_List</product_list>
+                    <product_list_toolbar>EasyAsk_Search_Block_Catalog_Product_List_Toolbar</product_list_toolbar>
+                    <layer_state>EasyAsk_Search_Block_Catalog_Layer_State</layer_state>
+                    <layer_view>EasyAsk_Search_Block_Catalog_Layer</layer_view>
+                    <layer_filter_attribute>EasyAsk_Search_Block_Catalog_Layer_Filter_Attribute</layer_filter_attribute>
+                    <breadcrumbs>EasyAsk_Search_Block_Catalog_Breadcrumbs</breadcrumbs>
+                </rewrite>
+            </catalog>
+
+             <catalogsearch>
+             	<rewrite>
+             		<layer_filter_attribute>EasyAsk_Search_Block_CatalogSearch_Layer_Filter_Attribute</layer_filter_attribute>
+             		<layer>EasyAsk_Search_Block_CatalogSearch_Layer</layer>
+             		<result>EasyAsk_Search_Block_CatalogSearch_Result</result>
+             	</rewrite>
+             </catalogsearch>
+
+             <page>
+             	<rewrite>
+             		<html_pager>EasyAsk_Search_Block_Html_Pager</html_pager>
+             	</rewrite>
+             </page>
+
+        </blocks>
+
+        <events>
+
+            <catalog_controller_category_init_after>
+                <observers>
+                    <easyask_search_catalog_controller_category_init_after>
+                        <type>singleton</type>
+                        <class>easyask_search/observer</class>
+                        <method>catalogControllerCategoryInitAfter</method>
+                    </easyask_search_catalog_controller_category_init_after>
+                </observers>
+            </catalog_controller_category_init_after>
+
+        </events>
+
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <easyask_search before="Mage_Adminhtml">EasyAsk_Search_Adminhtml</easyask_search>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    
+    <default>
+    	<catalog>
+    		<layered_navigation>
+    			<ea_multiselect>1</ea_multiselect>
+    		</layered_navigation>
+    	</catalog>
+    </default>
+    
+</config>

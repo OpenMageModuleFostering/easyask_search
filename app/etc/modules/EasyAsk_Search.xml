@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <EasyAsk_Search>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <Mage_CatalogSearch/>
+            </depends>
+        	<version>0.1.0</version>
+		</EasyAsk_Search>
+    </modules>
+</config>

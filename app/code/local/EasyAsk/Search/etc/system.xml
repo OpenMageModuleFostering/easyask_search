@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Enterprise Edition
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magento Enterprise Edition License
+ * that is bundled with this package in the file LICENSE_EE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.magentocommerce.com/license/enterprise-edition
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    Enterprise
+ * @package     Enterprise_Search
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://www.magentocommerce.com/license/enterprise-edition
+ */
+-->
+<config>
+   <sections>
+        <catalog>
+            <groups>
+                <search>
+                    <fields>
+                        <auto_redirect translate="label">
+                            <label>Auto Redirect to Product Detail Page</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>18</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </auto_redirect>
+                        <engine translate="label">
+                            <label>Search Engine</label>
+                            <frontend_type>select</frontend_type>
+                            <backend_model>easyask_search/adminhtml_system_config_backend_engine</backend_model>
+                            <source_model>easyask_search/adminhtml_system_config_source_engine</source_model>
+                            <sort_order>19</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </engine>
+                        <ea_server_hostname translate="label">
+                            <label>EasyAsk Server Hostname</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>51</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>easyask_search/engine</engine></depends>
+                        </ea_server_hostname>
+                        <ea_server_port translate="label">
+                            <label>EasyAsk Server Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>52</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>easyask_search/engine</engine></depends>
+                        </ea_server_port>
+                        <ea_dictionary translate="label">
+                            <label>EasyAsk Dictionary</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>53</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>easyask_search/engine</engine></depends>
+                        </ea_dictionary>
+                        <ea_test_connect_wizard translate="button_label">
+                            <label></label>
+                            <button_label>Test Connection</button_label>
+                            <frontend_model>easyask_search/adminhtml_system_config_testconnection</frontend_model>
+                            <sort_order>58</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <depends><engine>easyask_search/engine</engine></depends>
+                        </ea_test_connect_wizard>
+                        <search_type>
+                            <depends><engine>catalogsearch/fulltext_engine</engine></depends>
+                        </search_type>
+                        <use_layered_navigation_count>
+                            <depends><engine>catalogsearch/fulltext_engine</engine></depends>
+                        </use_layered_navigation_count>
+                    </fields>
+                </search>
+                <navigation translate="label">
+                    <fields>
+                        <use_easyask translate="label">
+                            <label>Use EasyAsk Navigation</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </use_easyask>
+                    </fields>
+                </navigation>
+
+                <layered_navigation translate="label">
+                    <fields>
+                        <ea_multiselect translate="label">
+                            <label>Use Multi-attribute Selection</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>54</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </ea_multiselect>
+                    </fields>
+                </layered_navigation>
+
+                <frontend translate="label">
+                    <fields>
+                        <use_magento_db translate="label">
+                            <label>Use Mageto DB to Load Product Collections</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                        </use_magento_db>
+                    </fields>
+                </frontend>
+                
+            </groups>
+        </catalog>
+    </sections>
+</config>

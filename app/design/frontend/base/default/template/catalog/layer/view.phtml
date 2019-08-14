@@ -1,0 +1,300 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+
+/**
+ * Category layered navigation
+ *
+ * @see Mage_Catalog_Block_Layer_View
+ */
+?>
+<?php
+
+$searchEngine = Mage::getStoreConfig ( 'catalog/search/engine' );
+$useEA = Mage::getStoreConfig ( 'catalog/navigation/use_easyask' );
+if ((strcasecmp ( $searchEngine, 'easyask_search/engine' ) === 0 && $useEA) || (strcasecmp ( $searchEngine, 'easyask_search/engine' ) === 0 && $this->getRequest()->getControllerName() == 'result')) {
+	
+	$hiddenFilters = array ();
+	$showFilters = array ();
+	?>
+
+<?php if($this->canShowBlock()): ?>
+<div class="block block-layered-nav">
+	<div class="block-title">
+		<strong><span><?php echo $this->__('Shop By') ?></span></strong>
+	</div>
+	<div class="block-content">
+        <?php echo $this->getStateHtml()?>
+        <?php if($this->canShowOptions()): ?>
+            <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
+		<dl id="narrow-by-list">
+                <?php $_filters = $this->getFilters()?>
+                <?php foreach ($_filters as $_filter): ?>
+					
+                <?php
+				
+				$selectionInLonglist = false;
+				$j = 0;
+				$selectionsInShortList = array ();
+				foreach ( $_filter->getItems () as $item ) :
+					$j ++;
+					if ($item->getIsChecked () && $j < $_filter->getIsInitDisplayLimited ()) {
+						$selectionsInShortList [] = $item->getUniqueId ();
+					} else if ($item->getIsChecked () && $j > $_filter->getIsInitDisplayLimited () && ! in_array ( $item->getUniqueId (), $selectionsInShortList )) {
+						$selectionInLonglist = true;
+					}
+				endforeach
+				;
+				
+				if ($_filter->getIsInitDisplayLimited () > 0 && ($_filter->getItemsCount () > $_filter->getIsInitDisplayLimited ())) {
+					if (! $selectionInLonglist) {
+						$hiddenFilters [] = strtolower ( $_filter->getName () );
+					} else {
+						$showFilters [] = strtolower ( $_filter->getName () );
+					}
+				}
+				
+				if ($_filter->getItemsCount ()) :
+					?>
+                    <dt
+				title=<?php echo $this->__($_filter->getAttributeCode()) ?>><?php echo $this->__($_filter->getName()) ?></dt>
+                    <?php if($_filter->getIsRangeFilter() == 1):?>
+                    <?php
+						
+foreach ( $_filter->getItems () as $item ) :
+							$av = $item;
+							break;
+						endforeach
+						;
+						?>
+					<dd class="ea-range-container">
+				<div class="ea-range-attr"
+					ea_attr="<?php echo $this->__($_filter->getName()) ?>"
+					eaMin="<?php echo $av->getMinValue() ?>"
+					eaMax="<?php echo $av->getMaxValue() ?>"
+					eaMinRange="<?php echo $av->getMinRangeValue() ?>"
+					eaMaxRange="<?php echo $av->getMaxRangeValue() ?>"
+					eaScale="<?php echo $av->getRangeRound() ?>"
+					eaSeoAttr="<?php echo $av->getEaSeoAttr() ?>"
+					eaPath="<?php echo $av->getEapath() ?>"></div>
+				<input class="ea-range-value ea-range-min" type="text"> <input
+					class="ea-range-value ea-range-max" type="text">
+                	<?php else: ?>
+                    	
+			
+			
+			<dd><?php echo $_filter->getHtml()?>
+                	<?php endif; ?>
+				<?php endif; ?>
+                <?php endforeach; ?>
+            
+		
+		</dl>
+		<script type="text/javascript">decorateDataList('narrow-by-list')</script>
+		<script type="text/javascript">
+            // Toggle Functions
+			// Source modified from http://bonrouge.com/~togglit
+			function toggleNext(elm) {
+				var next = elm.nextSibling;
+				while ( next.nodeType !== 1 ) {
+					next = next.nextSibling;
+				}
+				next.style.display = (
+					(next.style.display === "none") 
+						? "block" 
+						: "none"
+				);
+			}
+
+			function toggleEl(elm) {
+				elm.className += ' ' + 'clicker';
+				elm.onclick = function() {
+					toggleNext(this);
+				}
+				toggleNext(elm);
+			}
+
+			var sheet = document.createElement('style');
+				sheet.innerHTML = ".clicker { cursor: pointer; }";
+				document.head.appendChild(sheet);
+			var toggle = document.getElementsByTagName("dt");
+			if ( toggle != undefined ) {
+				for (var i = 1; i < toggle.length; i++) {
+					if (toggle[i].title != 2)
+					toggleEl( toggle[i] );
+				}
+			}
+			var toggle1 = document.getElementsByName("more");
+						
+            </script>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+(function(jQuery){
+	  (function( $, undefined ) {
+<?php
+	foreach ( $hiddenFilters as $v ) {
+		echo "$('div[ea_id=\"cont-" . $v . "\"]').hide();";
+	}
+	foreach ( $showFilters as $v ) {
+		echo "$('div[ea_id=\"short-" . $v . "\"]').hide();";
+	}
+	?>
+
+$('#narrow-by-list dd ol').each(function(){
+	var vals = $(this).children('div');
+
+	if (2 == vals.length){
+		vals.each(function(){
+			$(this).find('.ea-nav-val-toggle a').each(function(_,togVal){
+				$(togVal).click(function(){
+					$(vals).toggle();
+					return false;
+				});
+			});
+		});
+	}
+	});
+
+$('.ea-range-attr').each(function(){
+	var min = $(this).attr('eaMin');
+	var max = $(this).attr('eaMax');
+	var attrName = $(this).attr('ea_attr');
+	var minRange = $(this).attr('eaMinRange');
+	var maxRange = $(this).attr('eaMaxRange');
+	var step = $(this).attr('eaScale') || 1.0;
+	var minInput = $(this).siblings('.ea-range-min')[0];
+	var maxInput = $(this).siblings('.ea-range-max')[0];
+	var eapath = $(this).attr('eaPath');
+	var eaSeoAttr = $(this).attr('eaSeoAttr');
+	var slider = $(this).slider({
+      range: true,
+      min: Number(minRange),
+      max: Number(maxRange),
+      step: Number(step),
+      values: [Number(min), Number(max) ],
+      change: function( event, ui ) {
+    	  var val = ui.values[0] + '@' + ui.values[1] + '@' + minRange + '@' + maxRange;
+    	  self.executeRangeAttr(eapath,eaSeoAttr,attrName,val);
+//    	  window.console && console.log('range: ' + ui.values[0] + ' - ' + ui.values[1]);
+      },
+      create: function(){
+    	  minInput.value = self.formatNumber(min,2);
+    	  maxInput.value = self.formatNumber(max,2);
+      },
+      slide: function(event, ui){
+    	  var min = ui.values[0];
+    	  var max = ui.values[1];
+    	  minInput.value = self.formatNumber(min,2);
+    	  maxInput.value = self.formatNumber(max,2);       	  
+      }
+    });
+
+	$(minInput).keypress(function(e){
+		if (13 == e.which){
+			minInput.value = self.formatNumber(minInput.value,2);
+			var val = minInput.value + '@' + maxInput.value + '@' + minRange + '@' + maxRange;
+			self.executeRangeAttr(eapath,eaSeoAttr,attrName,val);
+//			window.console && console.log('val: ' + val);
+			e.preventDefault();
+		}
+	});
+	$(maxInput).keypress(function(e){
+		if (13 == e.which){
+      	  	maxInput.value = self.formatNumber(maxInput.value,2);
+			var val = minInput.value + '@' + maxInput.value + '@' + minRange + '@' + maxRange;
+			self.executeRangeAttr(eapath,eaSeoAttr,attrName,val);
+//			window.console && console.log('val: ' + val);
+			e.preventDefault();
+		}
+	});
+
+});
+
+	
+	  }(jQuery));
+}(window.eaj$183 || jQuery));
+
+function formatNumber(val, decimal, group){
+	var re = '\\d(?=(\\d{' + (group || 3) + '})+' + (decimal > 0 ? '\\.' : '$') + ')';
+	return Number(val).toFixed(Math.max(0, ~~decimal)).replace(new RegExp(re, 'g'), '$&,');
+};
+
+function executeRangeAttr(path,easeoattr,attr,val){
+	var pathParts = path.split('/');
+	var query = '';
+	for(var i = 0; i < pathParts.length; i++){
+		var seg = pathParts[i];
+		if (seg.indexOf('-') == 0){
+			query = seg.substring(1);
+		}
+		if (seg.indexOf(easeoattr) == 0){ // begins with
+			pathParts[i] = attr + ":" + val;
+			window.location = '<?php echo $this->helper('catalogsearch')->getResultUrl() ?>' + "?ea_bc=" + pathParts.join('/');
+			return;
+		}
+	}
+	window.location = '<?php echo $this->helper('catalogsearch')->getResultUrl() ?>' + "?q=" + query + "&ea_path=" + path + '&ea_a=' + attr + ':' + val ;
+};
+
+ 
+</script>
+
+<?php
+
+} else {
+	if ($this->canShowBlock ()) :
+		?>
+<div class="block block-layered-nav">
+	<div class="block-title">
+		<strong><span><?php echo $this->__('Shop By') ?></span></strong>
+	</div>
+	<div class="block-content">
+        <?php echo $this->getStateHtml()?>
+        <?php if ($this->getLayer()->getState()->getFilters()): ?>
+            <div class="actions">
+			<a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a>
+		</div>
+        <?php endif; ?>
+        <?php if($this->canShowOptions()): ?>
+            <p class="block-subtitle"><?php echo $this->__('Shopping Options') ?></p>
+		<dl id="narrow-by-list">
+                <?php $_filters = $this->getFilters()?>
+                <?php foreach ($_filters as $_filter): ?>
+                <?php if($_filter->getItemsCount()): ?>
+                    <dt><?php echo $this->__($_filter->getName()) ?></dt>
+			<dd><?php echo $_filter->getHtml() ?></dd>
+                <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+		<script type="text/javascript">decorateDataList('narrow-by-list')</script>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; }?>

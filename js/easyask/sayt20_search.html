@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<title>EasyAsk</title>
+<!-- jQuery libraries with ui -->
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.js' ></script>
+<script type='text/javascript'>
+   $ea = jQuery.noConflict();
+</script>
+<script type='text/javascript' src="js/jquery-ui-1.9.2a.custom.min.js"></script>
+<link type='text/css' rel='stylesheet' charset='utf-8' href='2.0/flick/jquery-ui-1.9.2.custom.min.css'>
+
+<!-- EasyAsk client search -->
+<script type='text/javascript' src='2.0/ea-search-2.0.0.js' > </script>
+<link type='text/css' rel='stylesheet' charset='utf-8' href='css/ea-search-1.2.1.css'>
+
+<!-- EasyAsk SayT -->
+<script type='text/javascript' src='2.0/ea-autocomplete-2.0.0.js' > </script>
+<link type='text/css' rel='stylesheet' charset='utf-8' href='2.0/ea-autocomplete-2.0.0.css'>
+
+<!-- EasyAsk demo page -->
+<link type='text/css' rel='stylesheet' charset='utf-8' href='css/sayt_search.css'>
+
+</head>
+<body>
+<div class='ea-page'>
+  <table class='ea-top'>
+    <tr>
+      <!--td class='ea-logo'><img src='images/new_logo_2.gif' /></td-->
+      <td class='ea-logo'><img src='images/EasyAskLogo90pxHigh.png' /></td>
+      <td class='ea-search'>
+        <div class='ea-search-area'>
+          <input class='ea-input-area' id='question' type='text'/>
+          <input class='ea-input-button' id='search' type='image' src='images/search_button.gif'/>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <table class='ea-body' cellpadding='5'>
+    <tr>
+      <td class='ea-lhs'>
+        <div id='ea-nav'></div>
+      </td>
+      <td class='ea-results'>
+        <div id='ea-bc' class='ea-breadcrumb'></div>
+        <div id='ea-controls' class='ea-results-controls'>
+          <table class='ea-controls-first' cellpadding='0' cellspacing='0' border='0'>
+            <tr>
+              <td class='ea-viewing'>
+                <span class='ea-label-displaying'>Displaying items:</span>&nbsp;<span class='ea-first-item'>&nbsp;</span>&nbsp;-&nbsp;<span class='ea-last-item'>&nbsp;</span>&nbsp;<span class='ea-label-of'>of</span>&nbsp;<span class='ea-total-items'>&nbsp;</span>
+              </td>
+              <td class='ea-page-controls'>
+                <div class='ea-page-buttons'>
+                  <table cellpadding='0' cellspacing='0' border='0'>
+                    <tr>
+                      <td><input type='image' class='ea-page-first ea-page-image' src='images/movefirst.png'></td>
+                      <td><input type='image' class='ea-page-prev ea-page-image' src='images/moveprev.png'></td>
+                      <td><span class='ea-label-page'>Page</span>
+                      <td><input class='ea-current-page' type='text'/></td>
+                      <td><span class='ea-label-of'>of</span></td>
+                      <td><span class='ea-total-pages'></span></td>
+                      <td><input type='image' class='ea-page-next ea-page-image' src='images/movenext.png'></td>
+                      <td><input type='image' class='ea-page-last ea-page-image' src='images/movelast.png'></td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+          <table class='ea-controls-second' cellpadding='0' cellspacing='0' border='0'>
+            <tr>
+              <td class='ea-results-per-page-controls'>
+                <div class='ea-results-per-page'>
+                  <span class='ea-label-per-page'>Per Page</span>
+                  <select class='ea-select-results-per-page'>
+                    <option selected='selected' value='16'>16</option>
+                    <option value='32'>32</option>
+                    <option value='48'>48</option>
+                    <option value='All'>View All</option>
+                  </select>
+                </div>
+              </td>
+              <td class='ea-results-sort-by-controls'>
+                <div class='ea-results-sort-by'>
+                  <span class='ea-label-sort-by'>Sort By</span>
+                  <select class='ea-select-sort-by'>
+                    <option selected='selected' value='-default-'>Recommended</option>
+                    <option value='Product Name,t'>Name (A-Z)</option>
+                    <option value='Product Name,f'>Name (Z-A)</option>
+                    <option value='Price,t'>Price ($-$$$)</option>
+                    <option value='Price,f'>Price ($$$-$)</option>
+                    <option value='Manufacturer,t'>Manufacturer (A-Z)</option>
+                    <option value='Manufacturer,f'>Manufacturer (Z-A)</option>
+                  </select>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>         
+        <div id='ea-featured-products' class='ea-featured-products'></div>
+        <div id='ea-products' class='ea-products'></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
+<script type='text/javascript' src="2.0/ea-search-autocomplete-init.js"></script>
+</html>
